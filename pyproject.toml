@@ -36,7 +36,7 @@ test = [
 
 
 [project.urls]
-repository = "https://github.com/admchm/GameQueue Planner"
+repository = "https://github.com/admchm/GameQueue-Planner"
 
 [tool.coverage.report]
 exclude_lines = [
