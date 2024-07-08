@@ -1,1 +1,3 @@
-print("test")
+from models.platforms import platforms
+
+print(platforms["PlayStation"])
