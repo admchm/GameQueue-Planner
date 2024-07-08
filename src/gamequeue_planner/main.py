@@ -1,3 +1,13 @@
+from pprint import pprint
+import requests
+
 from models.platforms import platforms
 
-print(platforms["PlayStation"])
+api_url = "https://api.mobygames.com/v1/games/37067?format=normal&api_key="
+
+req = requests.get(api_url)
+data = req.json()
+
+pprint(data)
+
+#print(platforms["PlayStation"])
