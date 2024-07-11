@@ -10,4 +10,12 @@ data = req.json()
 
 pprint(data)
 
+# alter this code tomorrow
+r = requests.get(api_url, params={
+    "course_id": 1, "full": "true" })
+
+data = r.json()
+pprint(data)
+
+
 #print(platforms["PlayStation"])
