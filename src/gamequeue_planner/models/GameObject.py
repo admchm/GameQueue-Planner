@@ -16,4 +16,4 @@ class GameObject(object):
         print(f"moby num votes: {self.moby_num_votes}")
         print(f"first release date: {self.first_release_date}")
         print(f"platform name: {self.platform_name}")
-        print(f"platform id: {self.platform_id}")
+        print(f"platform id: {self.platform_id}\n")
