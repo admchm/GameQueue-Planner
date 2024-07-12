@@ -11,7 +11,7 @@ class APIClient(object):
         api_key = config['api_key']
         
         print("##################")
-        api_url = "https://api.mobygames.com/v1/games/37067?format=normal&api_key={api_key}"
+        api_url = f"https://api.mobygames.com/v1/games/37067?format=normal&api_key={api_key}"
 
         #req = requests.get(api_url)
         #data = req.json()
