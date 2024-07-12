@@ -63,3 +63,6 @@ target/
 
 # hatch-vcs version file
 src/gamequeue_planner/_version.py
+
+# config_file.json
+config_file.json
