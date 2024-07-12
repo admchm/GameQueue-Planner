@@ -13,7 +13,7 @@ class APIClient(object):
             config = json.load(config_file)
         api_key = config['api_key']
         
-        selected_platform = Platform.SEGA_SATURN.value
+        selected_platform = Platform.SNES.value
         selected_platform_id = platform_ids[selected_platform]
 
         #r = requests.get(api_url, params={
@@ -21,7 +21,8 @@ class APIClient(object):
         
         offset = 0
         limit =  100
-        game_count = 1
+    
+        games_array = []
         
         while True:
             
@@ -42,7 +43,6 @@ class APIClient(object):
                 single_game.moby_score = game['moby_score']
                 single_game.moby_num_votes = game['num_votes']
                 platform_details = game['platforms'] # getting nested data
-                game_count += 1
                 
                 i = 0 
                 platform_not_found = True
@@ -57,7 +57,8 @@ class APIClient(object):
                         i += 1
                         
                 single_game.print_details()
+                games_array.append(single_game)
                 
             time.sleep(10)
             offset += limit
-            
+        print(len(games_array))
