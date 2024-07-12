@@ -8,10 +8,9 @@ class APIClient(object):
         print("##################")
         api_url = "https://api.mobygames.com/v1/games/37067?format=normal&api_key=moby_"
 
-        req = requests.get(api_url)
-        data = req.json()
-
-        pprint(data)
+        #req = requests.get(api_url)
+        #data = req.json()
+        #pprint(data)
 
         r = requests.get(api_url, params={
         "course_id": 1, "full": "true" })
