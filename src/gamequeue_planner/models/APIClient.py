@@ -1,7 +1,8 @@
 import requests
 import json
 
-from models.platforms import platforms
+from models.Platform import Platform
+from models.platform_ids import platform_ids
 from models.GameObject import GameObject
 
 class APIClient(object):
@@ -10,16 +11,11 @@ class APIClient(object):
             config = json.load(config_file)
         api_key = config['api_key']
         
-        #selected_platform = "SEGA Saturn"
-        #selected_platform_id = platforms['SEGA Saturn']
-        
-        selected_platform = "SNES"
-        selected_platform_id = platforms['SNES']
+        selected_platform = Platform.SNES.value
+        selected_platform_id = platform_ids[selected_platform]
         
         #selected_platform = "Nintendo DS"
         #selected_platform_id = platforms['Nintendo DS']
-        
-        print(selected_platform_id)
         
         #api_url = f"https://api.mobygames.com/v1/games/37067?format=normal&api_key={api_key}"
         api_url = f"https://api.mobygames.com/v1/games/78?format=normal&api_key={api_key}"

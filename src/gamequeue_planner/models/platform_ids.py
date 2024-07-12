@@ -1,4 +1,4 @@
-platforms = {
+platform_ids = {
     "PlayStation": 6,
     "PlayStation 2": 7,
     "Dreamcast": 8,
