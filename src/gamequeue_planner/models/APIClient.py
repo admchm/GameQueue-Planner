@@ -3,7 +3,6 @@ import json
 from pprint import pprint
 from models.platforms import platforms
 
-
 class APIClient(object):
     def fetch_data_from_API(self):
         with open('config_file.json', 'r') as config_file:
