@@ -9,7 +9,6 @@ An educational project leveraging Python and Data Science for planning game-play
 Setup:
 
 In order to build the project, you need to create a config_file.json, where you should paste your API key that was provided by mobygames:
-.. code-block:: json
 
     {
         "api_key": "mobygames_api_key"
