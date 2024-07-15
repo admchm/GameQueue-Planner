@@ -1,23 +1,15 @@
 import requests
 import json
 import time
-import pandas as pd
 
 from models.Platform import Platform
 from models.platform_ids import platform_ids
 from models.GameObject import GameObject
 from models.CSVCreator import CSVCreator
 from models.DatesEditor import DatesEditor
+from models.GamesListEditor import GamesListEditor
 
-class APIClient(object):
-    # TODO: - move this function to a GamesObject class or something similar
-    # def sort_objects(self, games_array):
-    #     df = pd.DataFrame(games_array)
-    #     df['first_release_date'] = pd.to_datetime(df['first_release_date'])
-    #     df = df.sort_values(by='first_release_date')
-        
-    #     return df
-    
+class APIClient(object):    
     def fetch_data_from_API(self):
         with open('config_file.json', 'r') as config_file:
             config = json.load(config_file)
@@ -68,14 +60,15 @@ class APIClient(object):
                 single_game.print_details()
                 games_array.append(single_game)
                 
-                
             time.sleep(10)
             offset += limit
         print(len(games_array))
         
         dates_editor = DatesEditor()
         games_array = dates_editor.fix_the_dates_if_needed(games_array)
-        # sorted_items = self.sort_objects(games_array)
+        
+        games_list_editor = GamesListEditor()
+        games_array = games_list_editor.sort_by_date(games_array)
         
         csv = CSVCreator()
         csv.prepare_file(games_array)
