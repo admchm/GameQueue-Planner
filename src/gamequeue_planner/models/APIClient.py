@@ -5,9 +5,15 @@ import time
 from models.Platform import Platform
 from models.platform_ids import platform_ids
 from models.GameObject import GameObject
-#from pprint import pprint
+
+from models.CSVCreator import CSVCreator
 
 class APIClient(object):
+    # TODO: - Move this function somewhere else
+    #def sort_by(self, region: ReleaseRegion):
+        #self.SNES_games_list.sort(key=lambda item: self.parse_date(getattr(item, region.value)))
+        #self.SNES_games_list.sort(key=lambda item: self.parse_date(getattr(item, region.value)))
+    
     def fetch_data_from_API(self):
         with open('config_file.json', 'r') as config_file:
             config = json.load(config_file)
@@ -62,3 +68,6 @@ class APIClient(object):
             time.sleep(10)
             offset += limit
         print(len(games_array))
+        
+        csv = CSVCreator()
+        csv.prepare_file(games_array)
