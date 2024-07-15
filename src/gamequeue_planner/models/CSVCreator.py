@@ -22,7 +22,7 @@ class CSVCreator:
         
         try:
             with open(self.path_combined, mode='w', newline='') as file:
-                self.populate_file_with_data(games_list, file)
+                self.__populate_file_with_data(games_list, file)
                 
         except PermissionError:
             print(f"Error: Permission denied when trying to write to {self.path_combined}")
@@ -34,11 +34,10 @@ class CSVCreator:
             file.close()
             print(f"Created file at: {self.path_combined}")    
 
-    # TODO: - It should be private
-    def populate_file_with_data(self, games_list, file):
+    def __populate_file_with_data(self, games_list, file):
         try:
             writer = csv.writer(file)
-            writer.writerow(["Title", "Platform name", "Release date", "Moby score (votes)"])
+            writer.writerow(["Title", "Platform name", "Release date", "Moby (votes)"])
                 
             for item in games_list:
                 data_to_append = [item.title, item.platform_name, item.first_release_date, f"{item.moby_score} ({item.moby_num_votes})"]
