@@ -1,6 +1,16 @@
 class GameObject(object):
     
-    def __init__(self, title='', game_id='', moby_score='', moby_num_votes='', first_release_date='', platform_name='', platform_id='', is_DLC=False, is_special_edition=False):
+    def __init__(self,
+                 title='',
+                 game_id='',
+                 moby_score='', 
+                 moby_num_votes='',
+                 first_release_date='', 
+                 platform_name='',
+                 platform_id='',
+                 is_DLC=False,
+                 is_special_edition=False):
+        
         self.title = title
         self.game_id = game_id
         self.moby_score = moby_score
