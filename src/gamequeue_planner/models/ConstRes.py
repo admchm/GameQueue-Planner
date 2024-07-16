@@ -20,6 +20,12 @@ class ConstRes(Enum):
     PLATFORM_ID = "platform_id"
     FIRST_RELEASE_DATE = "first_release_date"
     GAMES = "games"
+    GENRES = "genres"
+    GENRE_NAME = "genre_name"
+    
+    # genre names
+    ADD_ON = "Add-on"
+    SPECIAL_EDITION = "Special edition"
     
     # filenames
     CONFIG_FILE_NAME = "config_file.json"

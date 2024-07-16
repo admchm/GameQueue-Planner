@@ -12,6 +12,13 @@ class APIClient(object):
         self.offset = offset
         self.limit = limit
         self.games_array = games_array
+        
+    def check_if_game_is_a_dlc_or_limited_edition(self, single_game, genre_name):
+        if genre_name == ConstRes.ADD_ON.value:
+            single_game.is_DLC = True
+                    
+        elif genre_name == ConstRes.SPECIAL_EDITION.value:
+            single_game.is_special_edition = True
     
     def fetch_data_from_API(self, selected_platforms):
         with open(ConstRes.CONFIG_FILE_NAME.value, 'r') as config_file:
@@ -36,7 +43,13 @@ class APIClient(object):
                 single_game.game_id = game[ConstRes.GAME_ID.value]
                 single_game.moby_score = game[ConstRes.MOBY_SCORE.value]
                 single_game.moby_num_votes = game[ConstRes.NUM_VOTES.value]
-                platform_details = game[ConstRes.PLATFORMS.value] # getting nested data
+                
+                genres = game[ConstRes.GENRES.value]              # nested data
+                genre_name = genres[0][ConstRes.GENRE_NAME.value]
+                
+                self.check_if_game_is_a_dlc_or_limited_edition(single_game, genre_name)
+                
+                platform_details = game[ConstRes.PLATFORMS.value] # nested data
                 
                 i = 0 
                 platform_not_found = True
@@ -49,7 +62,7 @@ class APIClient(object):
                         platform_not_found = False
                     else:
                         i += 1
-                        
+                
                 single_game.print_details()
                 self.games_array.append(single_game)
                 
