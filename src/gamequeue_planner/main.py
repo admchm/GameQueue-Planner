@@ -2,9 +2,11 @@ from models.APIClient import APIClient
 from models.DatesEditor import DatesEditor
 from models.GamesListEditor import GamesListEditor
 from models.CSVCreator import CSVCreator
+from models.Platform import Platform
 
 client = APIClient()
-games_data = client.fetch_data_from_API()
+selected_platforms = Platform.SNES.value
+games_data = client.fetch_data_from_API(selected_platforms)
 
 dates_editor = DatesEditor()
 dates_editor.fix_the_dates_if_needed(games_data)

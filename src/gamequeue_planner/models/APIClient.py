@@ -2,24 +2,22 @@ import requests
 import json
 import time
 
-from models.Platform import Platform
 from models.platform_ids import platform_ids
 from models.GameObject import GameObject
 
 class APIClient(object):
     
-    def __init__(self, offset=1200, limit=100, games_array=[]):
+    def __init__(self, offset=0, limit=100, games_array=[]):
         self.offset = offset
         self.limit = limit
         self.games_array = games_array
     
-    def fetch_data_from_API(self):
+    def fetch_data_from_API(self, selected_platforms):
         with open('config_file.json', 'r') as config_file:
             config = json.load(config_file)
         api_key = config['api_key']
         
-        selected_platform = Platform.SNES.value # TODO: - extract this value a level higher
-        selected_platform_id = platform_ids[selected_platform]
+        selected_platform_id = platform_ids[selected_platforms]
         
         while True:
             api_url = f"https://api.mobygames.com/v1/games?platform={selected_platform_id}&format=normal&offset={self.offset}&api_key={api_key}"
@@ -43,7 +41,7 @@ class APIClient(object):
                 platform_not_found = True
                 
                 while platform_not_found:
-                    if platform_details[i]['platform_name'] == selected_platform:
+                    if platform_details[i]['platform_name'] == selected_platforms:
                         single_game.first_release_date = platform_details[i]['first_release_date']
                         single_game.platform_name = platform_details[i]['platform_name']
                         single_game.platform_id = platform_details[i]['platform_id']
