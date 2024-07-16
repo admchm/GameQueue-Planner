@@ -9,22 +9,33 @@ from models.CSVCreator import CSVCreator
 from models.DatesEditor import DatesEditor
 from models.GamesListEditor import GamesListEditor
 
-class APIClient(object):    
+class APIClient(object):
+    def fix_dates(self, games_array):
+        dates_editor = DatesEditor()
+        games_array = dates_editor.fix_the_dates_if_needed(games_array)
+        
+        return games_array
+    
+    def sort_data(self, games_array):
+        games_list_editor = GamesListEditor()
+        games_array = games_list_editor.sort_by_date(games_array)
+        
+        return games_array
+    
+    def create_CSV_file(self, games_array):
+        csv = CSVCreator()
+        csv.prepare_file(games_array)
+    
     def fetch_data_from_API(self):
         with open('config_file.json', 'r') as config_file:
             config = json.load(config_file)
         api_key = config['api_key']
         
-        selected_platform = Platform.SNES.value
+        selected_platform = Platform.Xbox_360.value
         selected_platform_id = platform_ids[selected_platform]
 
-        #r = requests.get(api_url, params={
-        #"course_id": 1, "full": "true" })
-        
-        #offset = 0
-        offset = 1200
-        limit =  100
-    
+        offset = 0
+        limit =  100    
         games_array = []
         
         while True:
@@ -64,11 +75,6 @@ class APIClient(object):
             offset += limit
         print(len(games_array))
         
-        dates_editor = DatesEditor()
-        games_array = dates_editor.fix_the_dates_if_needed(games_array)
-        
-        games_list_editor = GamesListEditor()
-        games_array = games_list_editor.sort_by_date(games_array)
-        
-        csv = CSVCreator()
-        csv.prepare_file(games_array)
+        games_array = self.fix_dates(games_array)
+        games_array = self.sort_data(games_array)
+        self.create_CSV_file(games_array)
