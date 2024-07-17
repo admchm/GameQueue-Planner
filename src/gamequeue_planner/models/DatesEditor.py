@@ -1,3 +1,4 @@
+from datetime import datetime
 from models.ConstRes import ConstRes
 
 class DatesEditor(object):
@@ -11,3 +12,9 @@ class DatesEditor(object):
                 game.first_release_date += ConstRes.DEFAULT_MISSING_DAY.value
                 
         return games_list
+    
+    def get_current_time(self):
+        current_time = datetime.now()
+        formatted_time = current_time.strftime('_%Y-%m-%d')
+        
+        return formatted_time

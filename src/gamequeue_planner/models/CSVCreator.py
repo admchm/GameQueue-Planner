@@ -1,9 +1,11 @@
 import csv
 import os
 
+from models.DatesEditor import DatesEditor
+
 class CSVCreator:
     
-    def __init__(self, path = "~/", file_name = "GameQueue_Planner_games_list.csv", path_combined = ""):
+    def __init__(self, path = "~/", file_name = "GameQueue.csv", path_combined = ""):
         self.path = path
         self.file_name = file_name
         self.path_combined = path_combined
@@ -11,13 +13,23 @@ class CSVCreator:
     def set_path(self, path):
         self.path = path
         
-    def set_file_name(self, filename):
-        self.file_name = filename
+    def set_file_name(self, file_name):
+        self.file_name = file_name
         
+    def add_date_to_file_name(self):
+        index = self.file_name.find('.') # inserting before .csv
+        time = DatesEditor.get_current_time(self)
+        
+        if index == -1:
+            return self.file_name
+        
+        self.file_name = self.file_name[:index] + time + self.file_name[index:]
+                
     def combine_path_with_file_name(self):
         self.path_combined = os.path.expanduser(f"{self.path + self.file_name}")
 
     def prepare_file(self, games_list):
+        self.add_date_to_file_name()
         self.combine_path_with_file_name()
         
         try:

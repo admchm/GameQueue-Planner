@@ -15,4 +15,6 @@ games_list_editor = GamesListEditor()
 games_array = games_list_editor.sort_by_date(games_data)
 
 csv = CSVCreator()
+csv.set_path("~/")
+csv.set_file_name("Games_list.csv")
 csv.prepare_file(games_data)
