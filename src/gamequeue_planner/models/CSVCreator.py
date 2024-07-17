@@ -2,7 +2,7 @@ import csv
 import os
 
 class CSVCreator:
-    # TODO: - Add the time to the filename
+    
     def __init__(self, path = "~/", file_name = "GameQueue_Planner_games_list.csv", path_combined = ""):
         self.path = path
         self.file_name = file_name

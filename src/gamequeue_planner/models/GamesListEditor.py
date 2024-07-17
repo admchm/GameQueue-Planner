@@ -5,6 +5,8 @@ class GamesListEditor(object):
         
     def sort_by_date(self, games_list):
         for item in games_list:
+            
+            #converting to datetime
             item.first_release_date = datetime.strptime(item.first_release_date, "%Y-%m-%d")
             
         games_list.sort(key=lambda x: x.first_release_date)
