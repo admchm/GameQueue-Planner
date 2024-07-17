@@ -28,9 +28,14 @@ class APIClient(object):
         selected_platform_id = platform_ids[selected_platforms]
         
         while True:
-            api_url = f"https://api.mobygames.com/v1/games?platform={selected_platform_id}&format=normal&offset={self.offset}&api_key={api_key}"
+            api_url = f"https://api.mobygames.com/v1/games?"
             
-            r = requests.get(api_url)
+            r = requests.get(api_url, params={
+                            "platform": selected_platform_id,
+                            "format": "normal",
+                            "offset": self.offset,
+                            "api_key": api_key})
+            
             data = r.json()[ConstRes.GAMES.value]
             
             if not data:
