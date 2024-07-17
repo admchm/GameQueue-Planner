@@ -13,6 +13,18 @@ class APIClient(object):
         self.limit = limit
         self.games_array = games_array
         
+    def get_data(self, api_key, selected_platform_id):
+        api_url = f"https://api.mobygames.com/v1/games?"
+            
+        r = requests.get(api_url, params={
+                            "platform": selected_platform_id,
+                            "format": "normal",
+                            "offset": self.offset,
+                            "api_key": api_key})
+            
+        data = r.json()[ConstRes.GAMES.value]
+        return data
+    
     def check_if_game_is_a_dlc_or_limited_edition(self, single_game, genre_name):
         if genre_name == ConstRes.ADD_ON.value:
             single_game.is_DLC = True
@@ -28,15 +40,7 @@ class APIClient(object):
         selected_platform_id = platform_ids[selected_platforms]
         
         while True:
-            api_url = f"https://api.mobygames.com/v1/games?"
-            
-            r = requests.get(api_url, params={
-                            "platform": selected_platform_id,
-                            "format": "normal",
-                            "offset": self.offset,
-                            "api_key": api_key})
-            
-            data = r.json()[ConstRes.GAMES.value]
+            data = self.get_data(api_key, selected_platform_id)
             
             if not data:
                 break
