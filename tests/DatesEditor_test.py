@@ -1,29 +1,24 @@
-# All of the tests that are using DatesEditor aren't working, so it needs to be fixed
+import sys
+import os
 
+import pytest
 
-# import sys
-# import os
-# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+# I decided to use freezgun for testing dates. It seems not that crucial for now,
+# but in the past I was using different format with hh-mm-ss. I'm not sure if I
+# won't use it again in the future, and that's why I'm including it:
+from freezegun import freeze_time
+from datetime import datetime
+from src.gamequeue_planner.models.DatesEditor import DatesEditor
 
-# import pytest
+@freeze_time("2023-07-19")
+def test_get_current_time():
+    editor = DatesEditor()
+    assert editor.get_current_time() == '_2023-07-19'
 
-# # I decided to use freezgun for testing dates. It seems not that crucial for now,
-# # but in the past I was using different format with hh-mm-ss. I'm not sure if I
-# # won't use it again in the future, and that's why I'm including it:
-# from freezegun import freeze_time
-# from datetime import datetime
-# from src.gamequeue_planner.models.DatesEditor import DatesEditor
-# #from src.gamequeue_planner.models.GamesListEditor import GamesListEditor
-
-# @freeze_time("2023-07-19")
-# def test_get_current_time():
-#     editor = DatesEditor()
-#     assert editor.get_current_time() == '_2023-07-19'
-
-# @freeze_time("2000-01-01")
-# def test_get_current_time_different_date():
-#     editor = DatesEditor()
-#     assert editor.get_current_time() == '_2000-01-01'
+@freeze_time("2000-01-01")
+def test_get_current_time_different_date():
+    editor = DatesEditor()
+    assert editor.get_current_time() == '_2000-01-01'
     
-# if __name__ == "__main__":
-#     pytest.main()
+if __name__ == "__main__":
+    pytest.main()

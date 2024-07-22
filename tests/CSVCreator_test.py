@@ -1,5 +1,3 @@
-# All of the tests that are using DatesEditor aren't working, so it needs to be fixed
-
 # import pytest
 # import os
 # import csv

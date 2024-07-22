@@ -8,7 +8,7 @@ from models.ConstRes import ConstRes
 
 class APIClient(object):
     
-    def __init__(self, offset=1000, limit=100, games_array=[]):
+    def __init__(self, offset=0, limit=100, games_array=[]):
         self.offset = offset
         self.limit = limit
         self.games_array = games_array
