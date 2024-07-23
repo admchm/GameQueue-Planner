@@ -29,6 +29,7 @@ class CSVCreator:
         self.path_combined = os.path.expanduser(f"{self.path + self.file_name}")
 
     def prepare_file(self, games_list):
+        print("LOG: Preparing CSV file")
         self.add_date_to_file_name()
         self.combine_path_with_file_name()
         
@@ -44,7 +45,7 @@ class CSVCreator:
             print(f"An unexpected error occured: {e}")
         finally:
             file.close()
-            print(f"Created file at: {self.path_combined}")    
+            print(f"LOG: Created file at: {self.path_combined}")    
 
     def __populate_file_with_data(self, games_list, file):
         try:
@@ -55,4 +56,4 @@ class CSVCreator:
                 data_to_append = [item.title, item.platform_name, item.first_release_date, f"{item.moby_score} ({item.moby_num_votes})"]
                 writer.writerow(data_to_append)
         except csv.Error as e:
-            print(f"CSV error occured: {e}")
+            print(f"ERROR: CSV error occured: {e}")

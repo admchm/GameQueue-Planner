@@ -4,7 +4,11 @@ from models.ConstRes import ConstRes
 class DatesEditor(object):
         
     def fix_the_dates_if_needed(self, games_list):
+        print("LOG: Fixing dates")
         for game in games_list:
+            if not game.first_release_date: # if empty, setting default date
+                game.first_release_date = ConstRes.DEFAULT_MISSING_YEAR_MONTH_AND_DAY.value
+            
             if len(game.first_release_date) == ConstRes.FOUR_DIGITS.value:
                 game.first_release_date += ConstRes.DEFAULT_MISSING_MONTH_AND_DAY.value
                 

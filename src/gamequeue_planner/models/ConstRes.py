@@ -9,6 +9,7 @@ class ConstRes(Enum):
     # default string values for missing days/months in fetched data
     DEFAULT_MISSING_DAY = "-01"
     DEFAULT_MISSING_MONTH_AND_DAY = "-12-01"
+    DEFAULT_MISSING_YEAR_MONTH_AND_DAY = "2000-01-01"
     
     # JSON data constants from APIClient
     TITLE = "title"

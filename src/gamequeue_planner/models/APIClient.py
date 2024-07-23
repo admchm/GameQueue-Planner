@@ -32,12 +32,12 @@ class APIClient(object):
         elif genre_name == ConstRes.SPECIAL_EDITION.value:
             single_game.is_special_edition = True
     
-    def fetch_data_from_API(self, selected_platforms):
+    def fetch_data_from_API(self, selected_platform):
         with open(ConstRes.CONFIG_FILE_NAME.value, 'r') as config_file:
             config = json.load(config_file)
         api_key = config[ConstRes.API_KEY.value]
         
-        selected_platform_id = platform_ids[selected_platforms]
+        selected_platform_id = platform_ids[selected_platform]
         
         while True:
             data = self.get_data(api_key, selected_platform_id)
@@ -63,19 +63,23 @@ class APIClient(object):
                 i = 0 
                 platform_not_found = True
                 
-                while platform_not_found:
-                    if platform_details[i][ConstRes.PLATFORM_NAME.value] == selected_platforms:
+                 # making sure that index won't get out of range. 
+                 # data on mobygames is not perfect, so we need to
+                 # make sure that we won't get a crash
+                for i in range(len(platform_details)):
+                    if platform_details[i][ConstRes.PLATFORM_NAME.value] == selected_platform:
                         single_game.first_release_date = platform_details[i][ConstRes.FIRST_RELEASE_DATE.value]
                         single_game.platform_name = platform_details[i][ConstRes.PLATFORM_NAME.value]
                         single_game.platform_id = platform_details[i][ConstRes.PLATFORM_ID.value]
                         platform_not_found = False
                     else:
                         i += 1
-                
+                                        
                 single_game.print_details()
                 self.games_array.append(single_game)
                 
             time.sleep(10)
             self.offset += self.limit
         
+        print("LOG: Finished downloading data for a platform")
         return self.games_array
