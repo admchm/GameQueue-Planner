@@ -5,8 +5,10 @@ from models.DatesEditor import DatesEditor
 from models.GamesListEditor import GamesListEditor
 from models.CSVCreator import CSVCreator
 from models.Platform import Platform
+from models.SelectedFileFormat import SelectedFileFormat
+from models.ExcelFileCreator import ExcelFileCreator
 
-selected_platforms = [Platform.PSP.value, Platform.Nintendo_DS.value]
+selected_platforms = [Platform.SEGA_32X.value, Platform.SEGA_CD.value]
 fetched_data = []
 
 for platform in selected_platforms:
@@ -23,7 +25,17 @@ fetched_data_with_correct_dates = dates_editor.fix_the_dates_if_needed(fetched_d
 games_list_editor = GamesListEditor()
 sorted_data = games_list_editor.sort_by_date(fetched_data_with_correct_dates)
 
-csv = CSVCreator()
-csv.set_path("~/")
-csv.set_file_name("Games_list.csv")
-csv.prepare_file(sorted_data)
+file_extension = SelectedFileFormat.EXCEL
+
+if file_extension == SelectedFileFormat.CSV:
+    csv = CSVCreator()
+    csv.set_path("~/")
+    csv.set_file_name("Games_list.csv")
+    csv.prepare_file(sorted_data)
+    
+elif file_extension == SelectedFileFormat.EXCEL:
+    excel = ExcelFileCreator()
+    excel.set_path("~/")
+    excel.set_file_name("Games_list.xlsx")
+    excel.prepare_file(sorted_data)
+    

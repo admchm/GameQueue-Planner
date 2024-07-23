@@ -11,7 +11,7 @@ class GamesListEditor(object):
             return False
     
     def sort_by_date(self, games_list):
-        print("LOG: sorting")
+        print("LOG: Sorting")
         valid_games_list = []
         
         for game in games_list:
