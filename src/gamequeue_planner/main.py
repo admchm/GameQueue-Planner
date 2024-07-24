@@ -26,8 +26,9 @@ def filter_excluding_dlcs(partially_filtered_data):
 
 def create_file_in_selected_format(sorted_data):
     file_extension = FileExtensions.CSV
-    filename = FilenameCreator()
-    filename.prepare_file(file_extension, sorted_data)
+    file = FilenameCreator()
+    file.file_name = "MyFile"
+    file.prepare_file(file_extension, sorted_data)
 
 for platform in selected_platforms:
     client = APIClient()
