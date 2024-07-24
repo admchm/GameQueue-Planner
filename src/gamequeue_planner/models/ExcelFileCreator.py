@@ -55,7 +55,7 @@ class ExcelFileCreator:
             "Title": [obj.title for obj in game_objects],
             "Platform name": [obj.platform_name for obj in game_objects],
             "Release date": [obj.first_release_date for obj in game_objects],
-            "Score": [obj.moby_score for obj in game_objects]
+            "Score": [f"{obj.moby_score} ({obj.moby_num_votes})" for obj in game_objects]
         }
         return pd.DataFrame(data)
     
@@ -65,6 +65,7 @@ class ExcelFileCreator:
         lighter_grey_fill = PatternFill(start_color="cfcfcf", end_color="cfcfcf", fill_type="solid")
         darker_grey_fill = PatternFill(start_color="b5b8b7", end_color="b5b8b7", fill_type="solid")
         dark_grey_side = Side(style='thin', color="b5b8b7")
+        black_side = Side(style='thin', color="000000")
         
         for sheet in wb.sheetnames:
             ws = wb[sheet]
@@ -93,7 +94,7 @@ class ExcelFileCreator:
                 if cell.row != 1:
                     cell.font = Font(name='Calibri', size=12, bold=True)
                     cell.fill = lighter_grey_fill
-                    cell.border = Border(left=dark_grey_side, right=dark_grey_side, top=dark_grey_side, bottom=dark_grey_side)
+                    cell.border = Border(left=dark_grey_side, right=black_side, top=dark_grey_side, bottom=dark_grey_side)
                     
         # Set the zoom level for the worksheet
             ws.sheet_view.zoomScale = 120
