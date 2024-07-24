@@ -1,44 +1,21 @@
 import pandas as pd
-import os
+
 from datetime import datetime
 from collections import defaultdict, OrderedDict
 from openpyxl import load_workbook
 
-from models.DatesEditor import DatesEditor
 from models.ConstRes import ConstRes
 from models.ExcelStyles import ExcelStyles
 
-class ExcelFileCreator:
-    
-    def __init__(self, path = "~/", file_name = "GameQueue.xlsx", path_combined = ""):
-        self.path = path
-        self.file_name = file_name
+class ExcelFileCreator(object):
+    def __init__(self, path_combined = ''):
         self.path_combined = path_combined
-    
-    def set_path(self, path):
-        self.path = path
         
-    def set_file_name(self, file_name):
-        self.file_name = file_name
-        
-    def add_date_to_file_name(self):
-        index = self.file_name.find('.') # inserting before .xlsx
-        time = DatesEditor.get_current_time(self)
-        
-        if index == -1:
-            return self.file_name
-        
-        self.file_name = self.file_name[:index] + time + self.file_name[index:]
-                
-    def combine_path_with_file_name(self):
-        self.path_combined = os.path.expanduser(f"{self.path + self.file_name}")
-        
-    def prepare_file(self, games_list):
+    def process_file(self, games_list, file_name):
         print("LOG: Preparing Excel file")
         
-        #TODO: - Split these functions
-        self.add_date_to_file_name()
-        self.combine_path_with_file_name()
+        self.path_combined = file_name
+        
         splitted_games = self.split_games_from_list_to_sheets_per_years(games_list)
         prepared_list = self.sort_games_list_with_years(splitted_games)
         
@@ -83,7 +60,7 @@ class ExcelFileCreator:
     
     def adjust_column_widths(self):
         styles = ExcelStyles()
-        wb = load_workbook(self.path_combined) # self.file_name
+        wb = load_workbook(self.path_combined)
         
         for sheet in wb.sheetnames:
             ws = wb[sheet]

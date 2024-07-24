@@ -1,5 +1,5 @@
 from enum import Enum, auto
 
-class SelectedFileFormat(Enum):
+class FileExtensions(Enum):
     CSV = auto()
     EXCEL = auto()
