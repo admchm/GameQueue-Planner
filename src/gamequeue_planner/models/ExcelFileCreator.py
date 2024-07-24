@@ -4,11 +4,8 @@ import os
 from datetime import datetime
 from collections import defaultdict, OrderedDict
 from openpyxl import load_workbook
-from openpyxl.styles import Font
+from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
 # from models.DatesEditor import DatesEditor TODO: - ERROR with import
-
-# This functionality is experimental. It is splitted to separated sheets
-# by year, but it doesn't look as good as csv
 
 class ExcelFileCreator:
     
@@ -65,6 +62,10 @@ class ExcelFileCreator:
     def adjust_column_widths(self):
         wb = load_workbook(self.path_combined) # self.file_name
         
+        lighter_grey_fill = PatternFill(start_color="cfcfcf", end_color="cfcfcf", fill_type="solid")
+        darker_grey_fill = PatternFill(start_color="b5b8b7", end_color="b5b8b7", fill_type="solid")
+        dark_grey_side = Side(style='thin', color="b5b8b7")
+        
         for sheet in wb.sheetnames:
             ws = wb[sheet]
             
@@ -78,9 +79,22 @@ class ExcelFileCreator:
                     except:
                         pass
                     cell.font = Font(name='Calibri', size=12)
+                    if cell.row == 1:
+                        cell.font = Font(name='Calibri', size=12, bold=True)
+                        cell.fill = darker_grey_fill
+                        
+                    if cell.row > 1:
+                        cell.alignment = Alignment(indent=1, horizontal='left', vertical='top')
                     adjusted_width = (max_length + 2)
                     ws.column_dimensions[column].width = adjusted_width
-        
+            
+            # bold the first column, fill with color
+            for cell in ws['A']:
+                if cell.row != 1:
+                    cell.font = Font(name='Calibri', size=12, bold=True)
+                    cell.fill = lighter_grey_fill
+                    cell.border = Border(left=dark_grey_side, right=dark_grey_side, top=dark_grey_side, bottom=dark_grey_side)
+                    
         # Set the zoom level for the worksheet
             ws.sheet_view.zoomScale = 120
         
