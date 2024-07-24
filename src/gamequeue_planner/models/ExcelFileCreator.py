@@ -11,10 +11,9 @@ class ExcelFileCreator(object):
     def __init__(self, path_combined = ''):
         self.path_combined = path_combined
         
-    def process_file(self, games_list, file_name):
+    def process_file(self, games_list, file_path):
         print("LOG: Preparing Excel file")
-        
-        self.path_combined = file_name
+        self.path_combined = file_path
         
         splitted_games = self.split_games_from_list_to_sheets_per_years(games_list)
         prepared_list = self.sort_games_list_with_years(splitted_games)
@@ -84,8 +83,7 @@ class ExcelFileCreator(object):
                     adjusted_width = (max_length + 2)
                     ws.column_dimensions[column].width = adjusted_width
             
-            # bold the first column, fill with color
-            for cell in ws['A']:
+            for cell in ws['A']: # bold the first column, fill with color
                 if cell.row != 1:
                     cell.font = styles.get_standard_bold_font()
                     cell.fill = styles.get_lighter_grey_fill()
