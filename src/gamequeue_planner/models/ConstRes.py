@@ -31,5 +31,8 @@ class ConstRes(Enum):
     # filenames
     CONFIG_FILE_NAME = "config_file.json"
     
+    # library and component names
+    OPENPYXL = "openpyxl"
+    
     # general constants
     API_KEY = "api_key"

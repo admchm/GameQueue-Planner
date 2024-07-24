@@ -1,11 +1,12 @@
 import pandas as pd
 import os
-
 from datetime import datetime
 from collections import defaultdict, OrderedDict
 from openpyxl import load_workbook
-from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
+
 from models.DatesEditor import DatesEditor
+from models.ConstRes import ConstRes
+from models.ExcelStyles import ExcelStyles
 
 class ExcelFileCreator:
     
@@ -32,6 +33,27 @@ class ExcelFileCreator:
     def combine_path_with_file_name(self):
         self.path_combined = os.path.expanduser(f"{self.path + self.file_name}")
         
+    def prepare_file(self, games_list):
+        print("LOG: Preparing Excel file")
+        
+        #TODO: - Split these functions
+        self.add_date_to_file_name()
+        self.combine_path_with_file_name()
+        splitted_games = self.split_games_from_list_to_sheets_per_years(games_list)
+        prepared_list = self.sort_games_list_with_years(splitted_games)
+        
+        data_frames = {}
+        for year, game_objects in prepared_list.items():
+            data_frames[year] = self.create_dataframe(game_objects)
+        
+        with pd.ExcelWriter(self.path_combined, engine=ConstRes.OPENPYXL.value) as writer:
+            for year, df in data_frames.items():
+                df.to_excel(writer, sheet_name=str(year), index=False)
+        
+        self.adjust_column_widths()
+        
+        print(f"LOG: Created file at: {self.path_combined}")    
+    
     def split_games_from_list_to_sheets_per_years(self, games_list):
         splitted_games_by_year = defaultdict(list)
         
@@ -60,12 +82,8 @@ class ExcelFileCreator:
         return pd.DataFrame(data)
     
     def adjust_column_widths(self):
+        styles = ExcelStyles()
         wb = load_workbook(self.path_combined) # self.file_name
-        
-        lighter_grey_fill = PatternFill(start_color="cfcfcf", end_color="cfcfcf", fill_type="solid")
-        darker_grey_fill = PatternFill(start_color="b5b8b7", end_color="b5b8b7", fill_type="solid")
-        dark_grey_side = Side(style='thin', color="b5b8b7")
-        black_side = Side(style='thin', color="000000")
         
         for sheet in wb.sheetnames:
             ws = wb[sheet]
@@ -79,45 +97,26 @@ class ExcelFileCreator:
                             max_length = len(cell.value)
                     except:
                         pass
-                    cell.font = Font(name='Calibri', size=12)
+                    cell.font = styles.get_standard_font()
                     if cell.row == 1:
-                        cell.font = Font(name='Calibri', size=12, bold=True)
-                        cell.fill = darker_grey_fill
+                        cell.font = styles.get_standard_bold_font()
+                        cell.fill = styles.get_darker_grey_fill()
                         
                     if cell.row > 1:
-                        cell.alignment = Alignment(indent=1, horizontal='left', vertical='top')
+                        cell.alignment = styles.get_cell_content_indent()
                     adjusted_width = (max_length + 2)
                     ws.column_dimensions[column].width = adjusted_width
             
             # bold the first column, fill with color
             for cell in ws['A']:
                 if cell.row != 1:
-                    cell.font = Font(name='Calibri', size=12, bold=True)
-                    cell.fill = lighter_grey_fill
-                    cell.border = Border(left=dark_grey_side, right=black_side, top=dark_grey_side, bottom=dark_grey_side)
+                    cell.font = styles.get_standard_bold_font()
+                    cell.fill = styles.get_lighter_grey_fill()
+                    cell.border = styles.get_first_column_border()
                     
         # Set the zoom level for the worksheet
             ws.sheet_view.zoomScale = 120
         
         wb.save(self.path_combined)
     
-    def prepare_file(self, games_list):
-        print("LOG: Preparing Excel file")
-        
-        #TODO: - Split these functions
-        self.add_date_to_file_name()
-        self.combine_path_with_file_name()
-        splitted_games = self.split_games_from_list_to_sheets_per_years(games_list)
-        prepared_list = self.sort_games_list_with_years(splitted_games)
-        
-        data_frames = {}
-        for year, game_objects in prepared_list.items():
-            data_frames[year] = self.create_dataframe(game_objects)
-        
-        with pd.ExcelWriter(self.path_combined, engine='openpyxl') as writer: # required openpyxl
-            for year, df in data_frames.items():
-                df.to_excel(writer, sheet_name=str(year), index=False)
-        
-        self.adjust_column_widths()
-        
-        print(f"LOG: Created file at: {self.path_combined}")                    
+                    
