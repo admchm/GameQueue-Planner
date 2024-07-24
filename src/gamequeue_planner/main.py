@@ -8,7 +8,10 @@ from models.Platform import Platform
 from models.SelectedFileFormat import SelectedFileFormat
 from models.ExcelFileCreator import ExcelFileCreator
 
-selected_platforms = [Platform.PSP.value, Platform.Nintendo_DS.value]
+#selected_platforms = [Platform.PSP.value, Platform.Nintendo_DS.value]
+selected_platforms = [Platform.SEGA_32X.value, Platform.SEGA_CD.value]
+
+
 fetched_data = []
 
 for platform in selected_platforms:

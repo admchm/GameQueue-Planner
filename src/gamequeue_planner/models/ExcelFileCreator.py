@@ -82,7 +82,7 @@ class ExcelFileCreator:
                     ws.column_dimensions[column].width = adjusted_width
         
         # Set the zoom level for the worksheet
-            ws.sheet_view.zoomScale = 125  # Ustawia poziom zoom na 80%
+            ws.sheet_view.zoomScale = 120
         
         wb.save(self.path_combined) # self.file_name
     
