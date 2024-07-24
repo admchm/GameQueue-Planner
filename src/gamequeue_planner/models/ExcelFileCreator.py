@@ -5,7 +5,7 @@ from datetime import datetime
 from collections import defaultdict, OrderedDict
 from openpyxl import load_workbook
 from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
-# from models.DatesEditor import DatesEditor TODO: - ERROR with import
+from models.DatesEditor import DatesEditor
 
 class ExcelFileCreator:
     
@@ -20,14 +20,14 @@ class ExcelFileCreator:
     def set_file_name(self, file_name):
         self.file_name = file_name
         
-    # def add_date_to_file_name(self):
-    #     index = self.file_name.find('.') # inserting before .xlsx
-    #     time = DatesEditor.get_current_time(self)
+    def add_date_to_file_name(self):
+        index = self.file_name.find('.') # inserting before .xlsx
+        time = DatesEditor.get_current_time(self)
         
-    #     if index == -1:
-    #         return self.file_name
+        if index == -1:
+            return self.file_name
         
-    #     self.file_name = self.file_name[:index] + time + self.file_name[index:]
+        self.file_name = self.file_name[:index] + time + self.file_name[index:]
                 
     def combine_path_with_file_name(self):
         self.path_combined = os.path.expanduser(f"{self.path + self.file_name}")
@@ -99,13 +99,13 @@ class ExcelFileCreator:
         # Set the zoom level for the worksheet
             ws.sheet_view.zoomScale = 120
         
-        wb.save(self.path_combined) # self.file_name
+        wb.save(self.path_combined)
     
     def prepare_file(self, games_list):
         print("LOG: Preparing Excel file")
         
         #TODO: - Split these functions
-        # self.add_date_to_file_name()
+        self.add_date_to_file_name()
         self.combine_path_with_file_name()
         splitted_games = self.split_games_from_list_to_sheets_per_years(games_list)
         prepared_list = self.sort_games_list_with_years(splitted_games)
