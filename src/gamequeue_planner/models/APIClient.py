@@ -12,18 +12,28 @@ class APIClient(object):
         self.offset = offset
         self.limit = limit
         self.games_array = games_array
+        self.max_retries = 20
         
     def get_data(self, api_key, selected_platform_id):
         api_url = f"https://api.mobygames.com/v1/games?"
+        
+        for attempt in range(self.max_retries):
+            try:
+                r = requests.get(api_url, params={
+                                    "platform": selected_platform_id,
+                                    "format": "normal",
+                                    "offset": self.offset,
+                                    "api_key": api_key})
             
-        r = requests.get(api_url, params={
-                            "platform": selected_platform_id,
-                            "format": "normal",
-                            "offset": self.offset,
-                            "api_key": api_key})
-            
-        data = r.json()[ConstRes.GAMES.value]
-        return data
+                data = r.json()[ConstRes.GAMES.value]
+                return data
+            except requests.exceptions.RequestException as e:
+                print(f"ERROR: An error occurred while making a request to the API")
+                if attempt < self.max_retries - 1:
+                    print("Another attempt for fetching data...")
+                    time.sleep(5)
+                else:
+                    return []
     
     def check_if_game_is_a_dlc_or_limited_edition(self, single_game, genre_name):
         if genre_name == ConstRes.ADD_ON.value:

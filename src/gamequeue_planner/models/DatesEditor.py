@@ -22,3 +22,10 @@ class DatesEditor(object):
         formatted_time = current_time.strftime('_%Y-%m-%d')
         
         return formatted_time
+    
+    #TODO: - rename both functions
+    def get_current_time_full(self):
+        current_time = datetime.now()
+        formatted_time = current_time.strftime('_%Y-%m-%d %H:%M:%S')
+        
+        return formatted_time

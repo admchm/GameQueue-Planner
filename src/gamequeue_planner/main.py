@@ -8,7 +8,9 @@ from models.FileExtensions import FileExtensions
 from models.FilenameCreator import FilenameCreator
 
 #selected_platforms = [Platform.PSP.value, Platform.Nintendo_DS.value]
-selected_platforms = [Platform.SEGA_32X.value, Platform.SEGA_CD.value]
+#selected_platforms = [Platform.Xbox_360.value]
+#selected_platforms = [Platform.SEGA_32X.value, Platform.SEGA_CD.value]
+selected_platforms = [Platform.PSP.value, Platform.Nintendo_DS.value, Platform.Xbox_360.value, Platform.PlayStation_3.value, Platform.Wii_U.value, Platform.Nintendo_3DS.value, Platform.PS_Vita.value]
 
 fetched_data = []
 
@@ -25,10 +27,13 @@ def filter_excluding_dlcs(partially_filtered_data):
     return [game for game in partially_filtered_data if not game.is_DLC]
 
 def create_file_in_selected_format(sorted_data):
-    file_extension = FileExtensions.CSV
+    file_extension = FileExtensions.EXCEL
     file = FilenameCreator()
     file.file_name = "MyFile"
     file.prepare_file(file_extension, sorted_data)
+
+dates_editor = DatesEditor()
+print(f"LOG: Started at {dates_editor.get_current_time_full()}")
 
 for platform in selected_platforms:
     client = APIClient()
@@ -38,7 +43,6 @@ for platform in selected_platforms:
     fetched_data = client.fetch_data_from_API(platform)
     time.sleep(10) # set sleep between new requests
  
-dates_editor = DatesEditor()
 fetched_data_with_correct_dates = dates_editor.fix_the_dates_if_needed(fetched_data)
 
 filtered_data = filter_data(filter_excluding_special_edition, filter_excluding_dlcs, fetched_data_with_correct_dates)
@@ -47,3 +51,5 @@ games_list_editor = GamesListEditor()
 sorted_data = games_list_editor.sort_by_date(filtered_data)
 
 create_file_in_selected_format(sorted_data)
+
+print(f"LOG: Finished at {dates_editor.get_current_time_full()}")
