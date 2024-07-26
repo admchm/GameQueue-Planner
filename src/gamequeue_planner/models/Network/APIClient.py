@@ -52,12 +52,15 @@ class APIClient(object):
             else:
                 return []
     
-    def check_if_game_is_a_dlc_or_limited_edition(self, single_game, genre_name):
-        if genre_name == ConstRes.ADD_ON.value:
+    def check_if_game_is_a_dlc_compilation_or_limited_edition(self, single_game):
+        if single_game.genre == ConstRes.ADD_ON.value:
             single_game.is_DLC = True
                     
-        elif genre_name == ConstRes.SPECIAL_EDITION.value:
+        elif single_game.genre == ConstRes.SPECIAL_EDITION.value:
             single_game.is_special_edition = True
+            
+        elif single_game.genre == ConstRes.COMPILATION.value:
+            single_game.is_compilation = True
     
     def fetch_data_from_API(self, selected_platform):
         with open(ConstRes.CONFIG_FILE_NAME.value, 'r') as config_file:
@@ -82,8 +85,7 @@ class APIClient(object):
                 
                 genres = game[ConstRes.GENRES.value]              # nested data
                 single_game.genre = genres[0][ConstRes.GENRE_NAME.value]
-                
-                self.check_if_game_is_a_dlc_or_limited_edition(single_game, single_game)
+                self.check_if_game_is_a_dlc_compilation_or_limited_edition(single_game)
                 
                 platform_details = game[ConstRes.PLATFORMS.value] # nested data
                 
@@ -101,9 +103,12 @@ class APIClient(object):
                         platform_not_found = False
                     else:
                         i += 1
-                                        
-                single_game.print_and_log_details()
-                self.games_array.append(single_game)
+                
+                if single_game.is_DLC or single_game.is_compilation or single_game.is_special_edition:
+                    self.logger.log_info(f"Skipping {single_game.title}, because it's a DLC, compilation or special edition\n")
+                else:
+                    single_game.print_and_log_details()
+                    self.games_array.append(single_game)
                 
             time.sleep(10)
             self.offset += self.limit

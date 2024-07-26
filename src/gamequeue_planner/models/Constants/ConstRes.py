@@ -27,6 +27,7 @@ class ConstRes(Enum):
     # genre names
     ADD_ON = "Add-on"
     SPECIAL_EDITION = "Special edition"
+    COMPILATION = "Compilation"
     
     # filenames
     CONFIG_FILE_NAME = "config_file.json"

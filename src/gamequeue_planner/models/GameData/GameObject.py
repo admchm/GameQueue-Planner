@@ -12,7 +12,8 @@ class GameObject(object):
                  platform_name='',
                  platform_id='',
                  is_DLC=False,
-                 is_special_edition=False):
+                 is_special_edition=False,
+                 is_compilation=False):
         
         self.title = title
         self.game_id = game_id
@@ -24,6 +25,7 @@ class GameObject(object):
         self.platform_id = platform_id
         self.is_DLC = is_DLC
         self.is_special_edition = is_special_edition
+        self.is_compilation = is_compilation
         
         self.logger = LoggerSingleton()
         
@@ -46,4 +48,6 @@ class GameObject(object):
         self.logger.log_info(f"DETAIL - platform name: {self.platform_name}")
         self.logger.log_info(f"DETAIL - platform id: {self.platform_id}")
         self.logger.log_info(f"DETAIL - dlc: {self.is_DLC}")
-        self.logger.log_info(f"DETAIL - special edition: {self.is_special_edition}\n")
+        self.logger.log_info(f"DETAIL - special edition: {self.is_special_edition}")
+        self.logger.log_info(f"DETAIL - compilation: {self.is_compilation}\n")
+        
