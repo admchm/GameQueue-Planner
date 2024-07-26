@@ -4,8 +4,8 @@ from datetime import datetime
 from collections import defaultdict, OrderedDict
 from openpyxl import load_workbook
 
-from models.ConstRes import ConstRes
-from models.ExcelStyles import ExcelStyles
+from models.Constants.ConstRes import ConstRes
+from models.Files.Excel.ExcelStyles import ExcelStyles
 from common.LoggerSingleton import LoggerSingleton
 
 class ExcelFileCreator(object):

@@ -1,11 +1,11 @@
 import time
 
-from models.APIClient import APIClient
-from models.DatesEditor import DatesEditor
-from models.GamesListEditor import GamesListEditor
-from models.Platform import Platform
-from models.FileExtensions import FileExtensions
-from models.FilenameCreator import FilenameCreator
+from models.Network.APIClient import APIClient
+from models.Dates.DatesEditor import DatesEditor
+from models.GameData.GamesListEditor import GamesListEditor
+from models.Platform.Platform import Platform
+from models.Files.FileExtensions import FileExtensions
+from models.Files.FilenameCreator import FilenameCreator
 from common.LoggerSingleton import LoggerSingleton
 
 selected_platforms = [Platform.SEGA_32X.value]
@@ -34,7 +34,7 @@ def filter_excluding_dlcs(partially_filtered_data):
     return [game for game in partially_filtered_data if not game.is_DLC]
 
 def create_file_in_selected_format(sorted_data):
-    file_extension = FileExtensions.CSV
+    file_extension = FileExtensions.EXCEL
     file = FilenameCreator()
     file.file_name = "MyFile"
     file.prepare_file(file_extension, sorted_data)

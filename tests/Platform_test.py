@@ -1,5 +1,5 @@
 import pytest
-from src.gamequeue_planner.models.Platform import Platform
+from gamequeue_planner.models.Platform.Platform import Platform
 
 
 def test_const_sony_platforms():

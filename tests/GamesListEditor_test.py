@@ -1,7 +1,7 @@
 import pytest
 
 from datetime import datetime
-from src.gamequeue_planner.models.GamesListEditor import GamesListEditor
+from gamequeue_planner.models.GameData.GamesListEditor import GamesListEditor
 
 # mocking single game (only partially)
 class MockGame:

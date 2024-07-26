@@ -1,5 +1,5 @@
 from datetime import datetime
-from models.ConstRes import ConstRes
+from models.Constants.ConstRes import ConstRes
 
 class DatesEditor(object):
     def fix_the_dates_if_needed(self, games_list):

@@ -5,7 +5,7 @@ import pytest
 # the future, and that's why I'm including it:
 
 from freezegun import freeze_time
-from src.gamequeue_planner.models.DatesEditor import DatesEditor
+from gamequeue_planner.models.Dates.DatesEditor import DatesEditor
 
 @freeze_time("2023-07-19")
 def test_get_current_time():

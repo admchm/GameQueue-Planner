@@ -2,9 +2,9 @@ import requests
 import json
 import time
 
-from models.platform_ids import platform_ids
-from models.GameObject import GameObject
-from models.ConstRes import ConstRes
+from models.Platform.platform_ids import platform_ids
+from models.GameData.GameObject import GameObject
+from models.Constants.ConstRes import ConstRes
 from common.LoggerSingleton import LoggerSingleton
 
 class APIClient(object):

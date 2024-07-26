@@ -1,8 +1,8 @@
 import os
-from models.DatesEditor import DatesEditor
-from models.FileExtensions import FileExtensions
-from models.CSVCreator import CSVCreator
-from models.ExcelFileCreator import ExcelFileCreator
+from models.Dates.DatesEditor import DatesEditor
+from models.Files.FileExtensions import FileExtensions
+from models.Files.CSV.CSVCreator import CSVCreator
+from models.Files.Excel.ExcelFileCreator import ExcelFileCreator
 
 class FilenameCreator(object):
     def __init__(self, path = '~/', file_name = 'Games_list', path_combined = ''):

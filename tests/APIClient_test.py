@@ -2,10 +2,10 @@ import pytest
 import requests
 import json
 
-from src.gamequeue_planner.models.APIClient import APIClient
-from src.gamequeue_planner.models.platform_ids import platform_ids
-from src.gamequeue_planner.models.GameObject import GameObject
-from src.gamequeue_planner.models.ConstRes import ConstRes
+from gamequeue_planner.models.Network.APIClient import APIClient
+from gamequeue_planner.models.Platform.platform_ids import platform_ids
+from src.gamequeue_planner.models.GameData.GameObject import GameObject
+from gamequeue_planner.models.Constants.ConstRes import ConstRes
 
 # Mock data
 mock_api_response = {

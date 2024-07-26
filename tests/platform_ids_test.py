@@ -1,6 +1,6 @@
 import pytest
 
-from src.gamequeue_planner.models.platform_ids import platform_ids
+from gamequeue_planner.models.Platform.platform_ids import platform_ids
 
 def test_expected_platform_ids_values():
     expected_platform_ids = {

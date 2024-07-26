@@ -1,5 +1,5 @@
 import pytest
-from src.gamequeue_planner.models.ConstRes import ConstRes
+from gamequeue_planner.models.Constants.ConstRes import ConstRes
 
 def test_const_numbers():
     assert ConstRes.FOUR_DIGITS.value == 4
