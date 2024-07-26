@@ -59,6 +59,7 @@ class ExcelFileCreator(object):
             "Platform name": [obj.platform_name for obj in game_objects],
             "Release date": [obj.first_release_date for obj in game_objects],
             "Score": [f"{obj.moby_score} ({obj.moby_num_votes})" for obj in game_objects],
+            "Genre": [obj.genre for obj in game_objects]
         }
         for column in additional_columns:
             data[column] = ""

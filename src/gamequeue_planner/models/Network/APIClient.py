@@ -81,9 +81,9 @@ class APIClient(object):
                 single_game.moby_num_votes = game[ConstRes.NUM_VOTES.value]
                 
                 genres = game[ConstRes.GENRES.value]              # nested data
-                genre_name = genres[0][ConstRes.GENRE_NAME.value]
+                single_game.genre = genres[0][ConstRes.GENRE_NAME.value]
                 
-                self.check_if_game_is_a_dlc_or_limited_edition(single_game, genre_name)
+                self.check_if_game_is_a_dlc_or_limited_edition(single_game, single_game)
                 
                 platform_details = game[ConstRes.PLATFORMS.value] # nested data
                 

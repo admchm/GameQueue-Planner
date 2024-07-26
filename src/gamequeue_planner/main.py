@@ -34,7 +34,7 @@ def filter_excluding_dlcs(partially_filtered_data):
     return [game for game in partially_filtered_data if not game.is_DLC]
 
 def create_file_in_selected_format(sorted_data):
-    file_extension = FileExtensions.EXCEL
+    file_extension = FileExtensions.CSV
     file = FilenameCreator()
     file.file_name = "MyFile"
     

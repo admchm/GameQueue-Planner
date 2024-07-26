@@ -24,7 +24,7 @@ class CSVCreator:
 
     def __populate_file_with_data(self, games_list, file, additional_columns):
         try:
-            row = ["Title", "Platform name", "Release date", "Moby (votes)"]
+            row = ["Title", "Platform name", "Release date", "Moby (votes)", "Genre"]
             
             for column in additional_columns:
                 row.append(column)
@@ -33,7 +33,7 @@ class CSVCreator:
             writer.writerow(row)
             
             for item in games_list:
-                data_to_append = [item.title, item.platform_name, item.first_release_date, f"{item.moby_score} ({item.moby_num_votes})"]
+                data_to_append = [item.title, item.platform_name, item.first_release_date, f"{item.moby_score} ({item.moby_num_votes})", item.genre]
                 writer.writerow(data_to_append)
         except csv.Error as e:
             self.logger.log_exception("ERROR: CSV error occured", e)
