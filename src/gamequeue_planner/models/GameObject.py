@@ -29,3 +29,5 @@ class GameObject(object):
         print(f"first release date: {self.first_release_date}")
         print(f"platform name: {self.platform_name}")
         print(f"platform id: {self.platform_id}\n")
+        print(f"dlc: {self.is_DLC}\n")
+        print(f"special edition: {self.is_special_edition}\n")
