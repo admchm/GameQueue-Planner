@@ -7,15 +7,15 @@ from models.Platform import Platform
 from models.FileExtensions import FileExtensions
 from models.FilenameCreator import FilenameCreator
 
-#selected_platforms = [Platform.SEGA_32X.value, Platform.SEGA_CD.value]
+selected_platforms = [Platform.SEGA_32X.value]
 
-selected_platforms = [Platform.PSP.value, 
-                      Platform.Nintendo_DS.value, 
-                      Platform.Xbox_360.value, 
-                      Platform.PlayStation_3.value, 
-                      Platform.Wii_U.value, 
-                      Platform.Nintendo_3DS.value, 
-                      Platform.PS_Vita.value]
+# selected_platforms = [Platform.PSP.value, 
+#                       Platform.Nintendo_DS.value, 
+#                       Platform.Xbox_360.value, 
+#                       Platform.PlayStation_3.value, 
+#                       Platform.Wii_U.value, 
+#                       Platform.Nintendo_3DS.value, 
+#                       Platform.PS_Vita.value]
 
 fetched_data = []
 

@@ -5,6 +5,7 @@ import time
 from models.platform_ids import platform_ids
 from models.GameObject import GameObject
 from models.ConstRes import ConstRes
+from common.LoggerSingleton import LoggerSingleton
 
 class APIClient(object):
     
@@ -13,6 +14,7 @@ class APIClient(object):
         self.limit = limit
         self.games_array = games_array
         self.max_retries = 20
+        self.logger = LoggerSingleton()
         
     def get_data(self, api_key, selected_platform_id):
         api_url = f"https://api.mobygames.com/v1/games?"
@@ -91,5 +93,5 @@ class APIClient(object):
             time.sleep(10)
             self.offset += self.limit
         
-        print("LOG: Finished downloading data for a platform")
+        self.logger.log_info("Finished downloading data for a platform")
         return self.games_array

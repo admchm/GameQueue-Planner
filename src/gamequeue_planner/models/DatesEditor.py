@@ -19,12 +19,12 @@ class DatesEditor(object):
     
     def get_current_time_days(self):
         current_time = datetime.now()
-        formatted_time = current_time.strftime('_%Y-%m-%d')
+        formatted_time = current_time.strftime('%Y-%m-%d')
         
         return formatted_time
     
     def get_current_time_full(self):
         current_time = datetime.now()
-        formatted_time = current_time.strftime('_%Y-%m-%d %H:%M:%S')
+        formatted_time = current_time.strftime('%Y-%m-%d %H:%M:%S')
         
         return formatted_time

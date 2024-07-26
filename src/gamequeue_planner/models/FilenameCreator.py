@@ -43,7 +43,7 @@ class FilenameCreator(object):
         if index == -1:
             return self.file_name
         
-        self.file_name = self.file_name[:index] + time + self.file_name[index:]
+        self.file_name = self.file_name[:index] + '_' + time + self.file_name[index:]
                 
     def combine_path_with_file_name(self):
         self.path_combined = os.path.expanduser(f"{self.path + self.file_name}")
