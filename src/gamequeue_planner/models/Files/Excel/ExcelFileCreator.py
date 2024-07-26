@@ -4,8 +4,8 @@ from datetime import datetime
 from collections import defaultdict, OrderedDict
 from openpyxl import load_workbook
 
-from models.Constants.ConstRes import ConstRes
 from models.Files.Excel.ExcelStyles import ExcelStyles
+from models.Constants.ConstRes import ConstRes
 from common.LoggerSingleton import LoggerSingleton
 
 class ExcelFileCreator(object):
@@ -13,7 +13,7 @@ class ExcelFileCreator(object):
         self.path_combined = path_combined
         self.logger = LoggerSingleton()
         
-    def process_file(self, games_list, file_path):
+    def process_file(self, games_list, file_path, additional_columns):
         self.logger.log_info("Preparing Excel file")
         
         self.path_combined = file_path
@@ -23,7 +23,7 @@ class ExcelFileCreator(object):
         
         data_frames = {}
         for year, game_objects in prepared_list.items():
-            data_frames[year] = self.create_dataframe(game_objects)
+            data_frames[year] = self.create_dataframe(game_objects, additional_columns)
         
         with pd.ExcelWriter(self.path_combined, engine=ConstRes.OPENPYXL.value) as writer:
             for year, df in data_frames.items():
@@ -52,13 +52,17 @@ class ExcelFileCreator(object):
         
         return OrderedDict((key, splitted_games[key]) for key in sorted_keys)
                 
-    def create_dataframe(self, game_objects):
+    def create_dataframe(self, game_objects, additional_columns):
+                
         data = {
             "Title": [obj.title for obj in game_objects],
             "Platform name": [obj.platform_name for obj in game_objects],
             "Release date": [obj.first_release_date for obj in game_objects],
-            "Score": [f"{obj.moby_score} ({obj.moby_num_votes})" for obj in game_objects]
+            "Score": [f"{obj.moby_score} ({obj.moby_num_votes})" for obj in game_objects],
         }
+        for column in additional_columns:
+            data[column] = ""
+            
         return pd.DataFrame(data)
     
     def adjust_column_widths(self):

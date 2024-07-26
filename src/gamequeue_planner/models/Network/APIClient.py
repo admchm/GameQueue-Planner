@@ -28,6 +28,8 @@ class APIClient(object):
                                     "api_key": api_key})
             
                 data = r.json()[ConstRes.GAMES.value]
+                
+                # TODO: - add exception to KeyError'games'
                 return data
             
             except requests.exceptions.RequestException as e:

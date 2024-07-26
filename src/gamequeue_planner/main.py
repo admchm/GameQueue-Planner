@@ -34,10 +34,14 @@ def filter_excluding_dlcs(partially_filtered_data):
     return [game for game in partially_filtered_data if not game.is_DLC]
 
 def create_file_in_selected_format(sorted_data):
-    file_extension = FileExtensions.EXCEL
+    file_extension = FileExtensions.CSV
     file = FilenameCreator()
     file.file_name = "MyFile"
-    file.prepare_file(file_extension, sorted_data)
+    
+    # It adds additional columns to a file. It's optional, so it can be empty
+    additional_columns = ["Started playing at", "Finished?", "My review"]
+    
+    file.prepare_file(file_extension, sorted_data, additional_columns)
 
 dates_editor = DatesEditor()
 logger.log_info(f"Started at {dates_editor.get_current_time_full()}\n")

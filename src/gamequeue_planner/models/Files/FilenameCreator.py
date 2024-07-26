@@ -10,20 +10,20 @@ class FilenameCreator(object):
         self.file_name = file_name
         self.path_combined = path_combined
         
-    def prepare_file(self, file_extension, games_list):
+    def prepare_file(self, file_extension, games_list, additional_columns):
         if file_extension == FileExtensions.CSV:
             self.set_file_name(self.file_name + ".csv")
             self.process_file_name()
             
             csv = CSVCreator()
-            csv.process_file(games_list, self.path_combined)
+            csv.process_file(games_list, self.path_combined, additional_columns)
             
         elif file_extension == FileExtensions.EXCEL:
             self.set_file_name(self.file_name + ".xlsx")
             self.process_file_name()
             
             excel = ExcelFileCreator()
-            excel.process_file(games_list, self.path_combined)
+            excel.process_file(games_list, self.path_combined, additional_columns)
         
     def process_file_name(self):
         self.set_path("~/")
