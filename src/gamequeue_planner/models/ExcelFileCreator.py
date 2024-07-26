@@ -6,13 +6,16 @@ from openpyxl import load_workbook
 
 from models.ConstRes import ConstRes
 from models.ExcelStyles import ExcelStyles
+from common.LoggerSingleton import LoggerSingleton
 
 class ExcelFileCreator(object):
     def __init__(self, path_combined = ''):
         self.path_combined = path_combined
+        self.logger = LoggerSingleton()
         
     def process_file(self, games_list, file_path):
-        print("LOG: Preparing Excel file")
+        self.logger.log_info("Preparing Excel file")
+        
         self.path_combined = file_path
         
         splitted_games = self.split_games_from_list_to_sheets_per_years(games_list)
@@ -28,7 +31,8 @@ class ExcelFileCreator(object):
         
         self.adjust_column_widths()
         
-        print(f"LOG: Created file at: {self.path_combined}")    
+        self.logger.log_info(f"Created file at: {self.path_combined}")
+        print(f"Created file at: {self.path_combined}")
     
     def split_games_from_list_to_sheets_per_years(self, games_list):
         splitted_games_by_year = defaultdict(list)
@@ -39,7 +43,7 @@ class ExcelFileCreator(object):
                 release_year = datetime.strptime(game.first_release_date, "%Y-%m-%d").year
                 splitted_games_by_year[release_year].append(game)
             else:
-                print(f"ERROR: Wrong date format of {game.title}")
+                self.logger.log_error(f"ERROR: Wrong date format of {game.title}")
         
         return splitted_games_by_year
                

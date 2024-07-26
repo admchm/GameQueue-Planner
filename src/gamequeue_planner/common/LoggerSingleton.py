@@ -19,6 +19,7 @@ class LoggerSingleton(object):
     def _initialize(self):
         dates_editor = DatesEditor()
         log_filename = f"{dates_editor.get_current_time_full()}.log"
+        
         logging.basicConfig(
             filename=log_filename,
             level=logging.INFO,
@@ -29,5 +30,12 @@ class LoggerSingleton(object):
         
     def log_info(self, message):
         self.logger.info(message)
-                
-    
+        
+    def log_warning(self, message):
+        self.logger.warning(message)
+
+    def log_error(self, message):
+        self.logger.error(message)
+        
+    def log_exception(self, message, exception):
+        self.logger.exception(f"{message}: {exception}")

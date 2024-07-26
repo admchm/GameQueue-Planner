@@ -6,6 +6,7 @@ from models.GamesListEditor import GamesListEditor
 from models.Platform import Platform
 from models.FileExtensions import FileExtensions
 from models.FilenameCreator import FilenameCreator
+from common.LoggerSingleton import LoggerSingleton
 
 selected_platforms = [Platform.SEGA_32X.value]
 
@@ -18,6 +19,7 @@ selected_platforms = [Platform.SEGA_32X.value]
 #                       Platform.PS_Vita.value]
 
 fetched_data = []
+logger = LoggerSingleton()
 
 def filter_data(filter_excluding_special_edition, filter_excluding_dlcs, fetched_data_with_correct_dates):
     partially_filtered_data = filter_excluding_special_edition(fetched_data_with_correct_dates)
@@ -32,13 +34,13 @@ def filter_excluding_dlcs(partially_filtered_data):
     return [game for game in partially_filtered_data if not game.is_DLC]
 
 def create_file_in_selected_format(sorted_data):
-    file_extension = FileExtensions.EXCEL
+    file_extension = FileExtensions.CSV
     file = FilenameCreator()
     file.file_name = "MyFile"
     file.prepare_file(file_extension, sorted_data)
 
 dates_editor = DatesEditor()
-print(f"LOG: Started at {dates_editor.get_current_time_full()}")
+logger.log_info(f"Started at {dates_editor.get_current_time_full()}\n")
 
 for platform in selected_platforms:
     client = APIClient()
@@ -57,4 +59,4 @@ sorted_data = games_list_editor.sort_by_date(filtered_data)
 
 create_file_in_selected_format(sorted_data)
 
-print(f"LOG: Finished at {dates_editor.get_current_time_full()}")
+logger.log_info(f"Finished at {dates_editor.get_current_time_full()}")

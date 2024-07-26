@@ -29,10 +29,12 @@ class APIClient(object):
             
                 data = r.json()[ConstRes.GAMES.value]
                 return data
+            
             except requests.exceptions.RequestException as e:
-                print(f"ERROR: An error occurred while making a request to the API")
+                self.logger.log_exception("ERROR: An error occurred while making a request to the API", e)
+                
                 if attempt < self.max_retries - 1:
-                    print("Another attempt for fetching data...")
+                    self.logger.log_warning("Another attempt for fetching data...")
                     time.sleep(5)
                 else:
                     return []
@@ -87,11 +89,11 @@ class APIClient(object):
                     else:
                         i += 1
                                         
-                single_game.print_details()
+                single_game.print_and_log_details()
                 self.games_array.append(single_game)
                 
             time.sleep(10)
             self.offset += self.limit
         
-        self.logger.log_info("Finished downloading data for a platform")
+        self.logger.log_info("Finished downloading data for a platform\n")
         return self.games_array

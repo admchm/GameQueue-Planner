@@ -30,7 +30,7 @@ def test_game_object_default_init():
 def test_game_object_print_details(capfd):
     game = GameObject('Fifa 2007', '43242', 31, 2, '2006-10-09', 'PlayStation 2', 16, False, False)
     
-    game.print_details()
+    game.print_and_log_details()
     captured = capfd.readouterr()
     
     expected_output = (

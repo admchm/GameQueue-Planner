@@ -1,3 +1,5 @@
+from common.LoggerSingleton import LoggerSingleton
+
 class GameObject(object):
     
     def __init__(self,
@@ -20,14 +22,23 @@ class GameObject(object):
         self.platform_id = platform_id
         self.is_DLC = is_DLC
         self.is_special_edition=is_special_edition
+        self.logger = LoggerSingleton()
         
-    def print_details(self):
+    def print_and_log_details(self):
         print(f"title: {self.title}")
         print(f"game id: {self.game_id}")
         print(f"moby score: {self.moby_score}")
         print(f"moby num votes: {self.moby_num_votes}")
         print(f"first release date: {self.first_release_date}")
         print(f"platform name: {self.platform_name}")
-        print(f"platform id: {self.platform_id}")
-        print(f"dlc: {self.is_DLC}")
-        print(f"special edition: {self.is_special_edition}\n")
+        print(f"platform id: {self.platform_id}\n")
+
+        self.logger.log_info(f"DETAIL - title: {self.title}")
+        self.logger.log_info(f"DETAIL - game id: {self.game_id}")
+        self.logger.log_info(f"DETAIL - moby score: {self.moby_score}")
+        self.logger.log_info(f"DETAIL - moby num votes: {self.moby_num_votes}")
+        self.logger.log_info(f"DETAIL - first release date: {self.first_release_date}")
+        self.logger.log_info(f"DETAIL - platform name: {self.platform_name}")
+        self.logger.log_info(f"DETAIL - platform id: {self.platform_id}")
+        self.logger.log_info(f"DETAIL - dlc: {self.is_DLC}")
+        self.logger.log_info(f"DETAIL - special edition: {self.is_special_edition}\n")
