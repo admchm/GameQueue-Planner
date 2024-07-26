@@ -8,7 +8,7 @@ from models.Files.FileExtensions import FileExtensions
 from models.Files.FilenameCreator import FilenameCreator
 from common.LoggerSingleton import LoggerSingleton
 
-selected_platforms = [Platform.SEGA_32X.value]
+selected_platforms = [Platform.SEGA_32X.value, Platform.SEGA_CD.value]
 
 # selected_platforms = [Platform.PSP.value, 
 #                       Platform.Nintendo_DS.value, 
@@ -34,7 +34,7 @@ def filter_excluding_dlcs(partially_filtered_data):
     return [game for game in partially_filtered_data if not game.is_DLC]
 
 def create_file_in_selected_format(sorted_data):
-    file_extension = FileExtensions.CSV
+    file_extension = FileExtensions.EXCEL
     file = FilenameCreator()
     file.file_name = "MyFile"
     

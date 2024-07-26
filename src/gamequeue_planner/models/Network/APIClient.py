@@ -26,20 +26,31 @@ class APIClient(object):
                                     "format": "normal",
                                     "offset": self.offset,
                                     "api_key": api_key})
+                r.raise_for_status() # raises HTTPError for bad responses
             
-                data = r.json()[ConstRes.GAMES.value]
+                data = r.json()
                 
-                # TODO: - add exception to KeyError'games'
-                return data
-            
+                if ConstRes.GAMES.value in data:
+                    return data[ConstRes.GAMES.value]
+                else:
+                    self.logger.log_warning("Key 'games' not found in the response. Attempting again.")
+                    time.sleep(5)
+                    continue        
+        
             except requests.exceptions.RequestException as e:
                 self.logger.log_exception("ERROR: An error occurred while making a request to the API", e)
                 
-                if attempt < self.max_retries - 1:
-                    self.logger.log_warning("Another attempt for fetching data...")
-                    time.sleep(5)
-                else:
-                    return []
+            except json.JSONDecodeError as e:
+                self.logger.log_exception("ERROR: An error occured while decoding JSON response", e)
+                
+            except KeyError as e:
+                self.logger.log_exception("ERROR: Missing key in JSON response", e)
+                
+            if attempt < self.max_retries - 1:
+                self.logger.log_warning("Another attempt for fetching data...")
+                time.sleep(5)
+            else:
+                return []
     
     def check_if_game_is_a_dlc_or_limited_edition(self, single_game, genre_name):
         if genre_name == ConstRes.ADD_ON.value:
