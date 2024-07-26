@@ -38,7 +38,7 @@ class FilenameCreator(object):
         
     def add_date_to_file_name(self):
         index = self.file_name.find('.') # inserting before .xlsx
-        time = DatesEditor.get_current_time(self)
+        time = DatesEditor.get_current_time_days(self)
         
         if index == -1:
             return self.file_name
