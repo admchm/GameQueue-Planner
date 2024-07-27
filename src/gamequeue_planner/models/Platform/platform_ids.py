@@ -28,5 +28,6 @@ platform_ids = {
     "Xbox One": 142,
     "New Nintendo 3DS": 174,
     "Nintendo Switch": 203,
-    "Xbox Series": 289
+    "Xbox Series": 289,
+    "PlayStation 5": 288
     }

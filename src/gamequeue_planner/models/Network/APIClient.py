@@ -16,6 +16,9 @@ class APIClient(object):
         self.max_retries = 20
         self.logger = LoggerSingleton()
         
+    # TODO: Implement functionality that warns the user in case of problems with servers.
+    #       If any data won't be fetched after 15 seconds, print a warning.
+        
     def get_data(self, api_key, selected_platform_id):
         api_url = f"https://api.mobygames.com/v1/games?"
         

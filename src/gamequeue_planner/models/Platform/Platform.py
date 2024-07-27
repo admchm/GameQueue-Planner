@@ -31,3 +31,4 @@ class Platform(Enum):
     New_Nintendo_3DS = "New Nintendo 3DS"
     Nintendo_Switch = "Nintendo Switch"
     Xbox_Series = "Xbox Series"
+    PlayStation_5 = "PlayStation 5"
