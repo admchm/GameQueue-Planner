@@ -8,16 +8,13 @@ from models.Files.FileExtensions import FileExtensions
 from models.Files.FilenameCreator import FilenameCreator
 from common.LoggerSingleton import LoggerSingleton
 
-#selected_platforms = [Platform.SEGA_32X.value, Platform.SEGA_CD.value]
-#selected_platforms = [Platform.Xbox_360.value]
-
 selected_platforms = [Platform.PlayStation.value,
                       Platform.Nintendo_64.value,
-                      Platform.Game_Boy_Color.value,
                       Platform.Dreamcast.value,
-                      Platform.GameCube.value,
-                      Platform.Game_Boy_Advance.value,
                       Platform.PlayStation_2.value,
+                      Platform.Game_Boy_Color.value,
+                      Platform.Game_Boy_Advance.value,
+                      Platform.GameCube.value,
                       Platform.Xbox.value,
                       Platform.PSP.value, 
                       Platform.Nintendo_DS.value, 
@@ -31,7 +28,8 @@ selected_platforms = [Platform.PlayStation.value,
                       Platform.Xbox_One.value,
                       Platform.PlayStation_4.value,
                       Platform.Nintendo_Switch.value,
-                      Platform.Xbox_Series.value
+                      Platform.Xbox_Series.value,
+                      Platform.PlayStation_5.value
                       ]
 
 fetched_data = []
@@ -50,7 +48,7 @@ def filter_excluding_dlcs(partially_filtered_data):
     return [game for game in partially_filtered_data if not game.is_DLC]
 
 def create_file_in_selected_format(sorted_data):
-    file_extension = FileExtensions.EXCEL
+    file_extension = FileExtensions.CSV
     file = FilenameCreator()
     file.file_name = "MyFile"
     
